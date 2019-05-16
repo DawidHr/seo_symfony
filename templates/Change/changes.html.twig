@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/sites">Strony</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Zamiany</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/logout">Wyloguj</a>
+  </li>
+</ul>
+<br><br>
+<center><h1>Lista możliwych zmian</h1></center>
+<br><br>
+<center>
+<form method="post">
+<label for="name">Dodaj: 
+<input type="text" name="change" /> </label>
+<input type="submit" name="submit" value="Dodaj" />
+</form> 
+    <table class="table table-striped" style="width: 75%;">
+        <thead class="thead-light">
+            <tr>
+                <td><strong>Zmiana:</strong></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>    
+    {% for  change in changes %}
+        <tr>
+            <td>{{ change.name }}</td>
+            <td><a href="/changes/delete/{{ change.changeId }}">Kasuj</a></td>
+        </tr>    
+    {% endfor %}
+    </tbody>
+</table>
+</center>
+{% endblock %}

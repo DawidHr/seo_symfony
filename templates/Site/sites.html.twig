@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="/sites">Strony</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Zamiany</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/logout">Wyloguj</a>
+  </li>
+</ul>
+<br><br>
+<center><h1>Lista stron pozycjonowanych</h1></center>
+<br><br>
+<center>
+    <table class="table table-striped" style="width: 75%;">
+        <thead class="thead-light">
+            <tr>
+                <td><strong>Nazwa:</strong></td>
+                <td><strong>Adres URL:</strong></td>
+                <td><strong>Mail: </strong></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>    
+    {% for  site in sites %}
+        <tr>
+            <td>{{ site.name }}</td>
+            <td>{{ site.url }}</td>
+            <td>{{ site.mail }}</td>
+            <td><a href="/site/{{ site.SiteId }}">Przejdz</a></td>
+        </tr>    
+    {% endfor %}
+    </tbody>
+</table>
+<a href="/site/add" type="button" class="btn btn-primary btn-lg">Dodaj Nową Stronę</a>
+
+</center>
+{% endblock %}

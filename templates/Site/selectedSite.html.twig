@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<center><h1>{{ site.name }}</h1></center>
+<div>
+<table>
+    <tr>
+        <td>Firma:</td>
+        <td>{{ site.name }}</td>
+    </tr>
+    <tr>
+        <td>Adres url:</td>
+        <td>{{ site.url }}</td>
+    </tr>
+    <tr>
+        <td>Mail: </td>
+        <td>{{ site.mail }}</td>
+    </tr>
+</table>
+</div>
+<div style="width: 1200px; margin: 0 auto;">
+<h2 style="margin: 20px auto; text-align: center;">Lista miesięcy pozycjonowanych: </h2>
+<table class="table table-striped" style="width: 75%;">
+{% for change in changes %}
+<tr>
+    <td>{{ change.SiteId.name }}</td>
+    <td>{{ change.changeDate |date("m/d/Y") }}</td>
+    <td><a href="/sitechanges/{{ change.SiteChangesId }}">Przejdz</a></td>
+</tr>
+{% endfor %}
+</table>
+<a href="/sitechanges/{{ site.name }}/add" type="button" class="btn btn-primary btn-lg">Dodaj Nowy Okres</a>
+
+
+</div>
+{% endblock %}

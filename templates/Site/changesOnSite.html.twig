@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<center>
+<table class="table table-striped" style="width: 75%;">
+<thead class="thead-light">
+    <tr>
+        <td style="text-align: center; font-size: 35px;">Zmiany</td>
+    </tr>
+</thead>
+<tbody>
+    {% for change in changes %}
+        <tr>
+            <td>{{ change.ChangeId.name }}</td>
+        </tr>
+    {% endfor %}
+    <tr>
+    <td></td>
+    </tr>
+</tbody>
+</table>
+</center>
+{% endblock %}

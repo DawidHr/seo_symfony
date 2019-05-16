@@ -1,0 +1,20 @@
+{% extends 'base.html.twig '%}
+{% block body %}
+<center><h1>Dodawanie Pozycjonowania do {{ site }}</h1>
+<form method="post"> 
+<label>Okres
+<input name="forDate" type="date" />
+</label>
+<div style="width: 75%; margin: 0 auto; overflow: auto; height: 200px;">
+<table class="table table-striped" style="width: 100%;">
+{% for change in changes %}
+<tr>
+    <td><input type="checkbox" name="changesarray" value="{{ change.ChangeId }}" > {{ change.name }}</td>
+</tr> 
+{% endfor %} 
+</table>
+</div>
+<input type="submit" name="submit" value="Dodaj" />
+</form>
+</center>
+{% endblock %}

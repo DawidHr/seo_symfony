@@ -1,0 +1,3 @@
+#main:
+#path: /cepW
+#controller: App\Controller\AccountController::loginPageView
