@@ -1,5 +1,19 @@
 {% extends 'base.html.twig '%}
 {% block body %}
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="/sites">Strony</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/changes">Zamiany</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/logout">Wyloguj</a>
+  </li>
+</ul>
+<br><br>
+
 <center><h1>Dodawanie Pozycjonowania do {{ site }}</h1>
 <form method="post"> 
 <label>Okres
@@ -9,7 +23,7 @@
 <table class="table table-striped" style="width: 100%;">
 {% for change in changes %}
 <tr>
-    <td><input type="checkbox" name="changesarray" value="{{ change.ChangeId }}" > {{ change.name }}</td>
+    <td><input type="checkbox" name="changesarray[]" value="{{ change.ChangeId }}" > {{ change.name }}</td>
 </tr> 
 {% endfor %} 
 </table>

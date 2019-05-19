@@ -23,7 +23,7 @@ class SiteChanges
     private $site_id;
 
     /**
-     * @ORM\Column(name="changeDate",type="datetime")
+     * @ORM\Column(name="changeDate",type="string")
      */
     private $changeDate;
 
@@ -44,12 +44,12 @@ class SiteChanges
         return $this;
     }
 
-    public function getChangeDate(): ?\DateTimeInterface
+    public function getChangeDate(): ?string
     {
         return $this->changeDate;
     }
 
-    public function setChangeDate(\DateTimeInterface $changeDate): self
+    public function setChangeDate(string $changeDate): self
     {
         $this->changeDate = $changeDate;
 

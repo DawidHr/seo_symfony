@@ -11,7 +11,6 @@ use App\Entity\ChangesSiteChanges;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-
 class SiteController extends AbstractController {
 
 
@@ -80,17 +79,29 @@ function viewSelectedSite(SessionInterface $session, $site) {
 */
 function addChangesOnSite(SessionInterface $session, $site) {
   if($session->get('account') !== null) {
-    if(isset($_POST['submit']) && empty($_POST['radio'])) {
-      $changesOnSite = $_POST['radio'];
+    if(isset($_POST['submit']) && !empty($_POST['changesarray'])) {
+      $en = $this->getDoctrine()->getRepository(Sites::class)->findOneBy(["name" => $site]);
+      
+      $sitechanges = new SiteChanges;
+      $sitechanges->setSiteId($en);
+      $date1 = date_parse($_POST['forDate']);
+      $date2 = $date1["year"]."-".$date1["month"]."-".$date1["day"];
+      $sitechanges->setChangeDate(date($date2));
+      $en2 = $this->getDoctrine()->getManager();
+      $en2->persist($sitechanges);
+      $en2->flush();
+ 
+      $changesOnSite = $_POST['changesarray'];
       for($i=0; $i < count($changesOnSite); $i++){
-        $change1 = new ChangesSiteChenges;
-        $change1.setSiteChangesId($site);
-        $change1.setChangeId($changesOnSite[$i]);
-        $repository2 = $this->getDoctrine()->getMenager();
+        $change1 = new ChangesSiteChanges;
+        $change1->setSiteChangesId($sitechanges);
+            $en3 = $this->getDoctrine()->getRepository(Changes::class)->findOneBy(["change_id" => $changesOnSite[$i]]);
+        $change1->setChangeId($en3);
+        $repository2 = $this->getDoctrine()->getManager();
         $repository2->persist($change1);
-        $repository->flush();
-      }
-      return $this->redirectToRoute("sites");
+        $repository2->flush();
+      } 
+       return $this->redirectToRoute("sites"); 
     }
     $repository = $this->getDoctrine()->getRepository(Changes::class);
     $changes = $repository->findAll();
@@ -113,6 +124,29 @@ function viewChangesOnSite(SessionInterface $session, $site) {
   } else {
     return $this->redirectToRoute("login");
   }
+}
+
+/** 
+ * @Route("/sites/delete/{site}", name="siteDelete")
+*/
+function deleteChangesOnSite(SessionInterface $session, $site) {
+  if($session->get('account') !== null) {
+    $changesOnsite = $this->getDoctrine()->getRepository(ChangesSiteChanges::class)->findBy(["site_changes_id" => $site]);
+    $db = $this->getDoctrine()->getManager();
+    foreach($changesOnsite as $change) {
+      $db->remove($change);
+      $db->flush();
+    }
+    $change = $this->getDoctrine()->getRepository(SiteChanges::class)->findOneBy(["site_changes_id" => $site]);
+    $db->remove($change);
+    $db->flush();
+
+    return $this->redirectToRoute("sites");
+
+  } else {
+    return $this->redirectToRoute("login");
+  }
+
 }
 
 }

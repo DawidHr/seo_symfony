@@ -5,6 +5,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Entity\Changes;
+use App\Entity\ChangesSiteChanges;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -37,8 +38,15 @@ class ChangeController extends AbstractController {
     */
     function deleteChange(SessionInterface $session, $id) {
         if($session !== null) {
+            $change1 = $this->getDoctrine()->getRepository(ChangesSiteChanges::class)->findBy(["change_id" => $id]);
+            $db1 = $this->getDoctrine()->getManager();
+            foreach($change1 as $change) {
+
+                $db1->remove($change);
+
+            }
             $change = $this->getDOctrine()->getRepository(Changes::class)->find($id);
-            $db = $this->getDoctrine()->getMenager();
+            $db = $this->getDoctrine()->getManager();
             $db->remove($change);
             $db->flush();
             return $this->redirectToRoute("changes");
